@@ -19,6 +19,17 @@ const Menu = React.lazy(() => import(/* webpackChunkName: "menu" */ './menu'));
 const BlankPage = React.lazy(() =>
   import(/* webpackChunkName: "blank-page" */ './blank-page')
 );
+const Employees = React.lazy(() =>
+  import(/* webpackChunkName: "blank-page" */ './employees')
+);
+
+const Events = React.lazy(() =>
+  import(/* webpackChunkName: "blank-page" */ './events')
+);
+
+const Companies = React.lazy(() =>
+  import(/* webpackChunkName: "blank-page" */ './companies')
+);
 
 const App = ({ match }) => {
   return (
@@ -62,7 +73,15 @@ const App = ({ match }) => {
             />
             <Route
               path={`${match.url}/employees`}
-              render={(props) => <BlankPage {...props} />}
+              render={(props) => <Employees {...props} />}
+            />
+            <Route
+              path={`${match.url}/events`}
+              render={(props) => <Events {...props} />}
+            />
+            <Route
+              path={`${match.url}/companies`}
+              render={(props) => <Companies {...props} />}
             />
             <Redirect to="/error" />
           </Switch>

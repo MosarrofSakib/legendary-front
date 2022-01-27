@@ -73,13 +73,13 @@ const App = ({ locale }) => {
                   render={(props) => <ViewUnauthorized {...props} />}
                 />
                 <Route
-                  path="/"
+                  path="/app"
                   exact
                   render={(props) => <ViewUser {...props} />}
                 />
-                {/*
+                
                 <Redirect exact from="/" to={adminRoot} />
-                */}
+               
                 <Redirect to="/error" />
               </Switch>
             </Router>

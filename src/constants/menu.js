@@ -35,6 +35,19 @@ const data = [
     ],
   },
   {
+      id: 'events',
+      icon: 'iconsminds-book',
+      label: 'menu.events',
+      to: `${adminRoot}/events`,
+      subs: [
+          {
+              id: 'create-event',
+              label: 'menu.new-event',
+              to: `${adminRoot}/events/add`,
+          }
+      ]
+  },
+  {
     id: 'pages',
     icon: 'iconsminds-user',
     label: 'menu.employees',
@@ -48,12 +61,12 @@ const data = [
           {
             icon: 'simple-icon-user-following',
             label: 'menu.new-employee',
-            to: '/employees/create',
+            to: `${adminRoot}/employees/add`,
           },
           {
             icon: 'simple-icon-user-following',
             label: 'menu.employees',
-            to: `${adminRoot}/employees`,
+            to: `${adminRoot}/employees/view`,
           },
           //   {
           //     icon: 'simple-icon-user-follow',
@@ -189,15 +202,28 @@ const data = [
     ],
   },
   {
-    id: 'applications',
-    icon: 'iconsminds-shop',
+    id: 'companies',
+    icon: 'iconsminds-hotel',
     label: 'menu.restaurant',
-    to: `${adminRoot}/applications`,
+    to: `${adminRoot}/companies`,
     subs: [
       {
         icon: 'simple-icon-check',
         label: 'menu.new-company',
-        to: `${adminRoot}/applications/todo`,
+        to: `${adminRoot}/companies/add`,
+      },
+    ],
+  },
+  {
+    id: 'invoices',
+    icon: 'iconsminds-folder',
+    label: 'Invoices',
+    to: `${adminRoot}/invoices`,
+    subs: [
+      {
+        icon: 'simple-icon-check',
+        label: 'menu.new-company',
+        to: `${adminRoot}/companies/add`,
       },
     ],
   },

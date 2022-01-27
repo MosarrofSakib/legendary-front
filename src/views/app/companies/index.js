@@ -1,14 +1,9 @@
 import React, { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-const CreateEmployee = React.lazy(() =>
-  import(/* webpackChunkName: "ui-forms" */ './create-employee')
+const CreateCompanie = React.lazy(() =>
+  import(/* webpackChunkName: "ui-forms" */ './create-companie')
 );
-
-const ViewEmployees = React.lazy(() =>
-  import(/* webpackChunkName: "ui-forms" */ './view-employee')
-);
-
 
 const UI = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
@@ -16,11 +11,7 @@ const UI = ({ match }) => (
       <Redirect exact from={`${match.url}/`} to={`${match.url}/forms`} />
       <Route
         path={`${match.url}/add`}
-        render={(props) => <CreateEmployee {...props} />}
-      />
-      <Route
-        path={`${match.url}/view`}
-        render={(props) => <ViewEmployees {...props} />}
+        render={(props) => <CreateCompanie {...props} />}
       />
       <Redirect to="/error" />
     </Switch>
