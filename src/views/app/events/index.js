@@ -5,7 +5,7 @@ const CreateEvent = React.lazy(() =>
   import(/* webpackChunkName: "ui-forms" */ './create-event')
 );
 
-const UI = ({ match }) => (
+const Events = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
       <Redirect exact from={`${match.url}/`} to={`${match.url}/forms`} />
@@ -17,4 +17,4 @@ const UI = ({ match }) => (
     </Switch>
   </Suspense>
 );
-export default UI;
+export default Events;
