@@ -37,7 +37,7 @@ const SalesChartCard = () => {
       </div>
       <CardBody>
         <CardTitle>
-          <IntlMessages id="dashboards.sales" />
+          <IntlMessages id="Events" />
         </CardTitle>
         <div className="dashboard-line-chart">
           <LineChart shadow data={lineChartData} />

@@ -5,46 +5,25 @@ const data = [
     id: 'dashboards',
     icon: 'iconsminds-shop-4',
     label: 'menu.analytics',
-    to: `${adminRoot}/dashboards`,
+    to: `${adminRoot}/dashboards/default`,
     // roles: [UserRole.Admin, UserRole.Editor],
-    subs: [
-      {
-        icon: 'simple-icon-briefcase',
-        label: 'menu.default',
-        to: `${adminRoot}/dashboards/default`,
-        // roles: [UserRole.Admin],
-      },
-      {
-        icon: 'simple-icon-pie-chart',
-        label: 'menu.analytics',
-        to: `${adminRoot}/dashboards/analytics`,
-        // roles: [UserRole.Admin],
-      },
-      {
-        icon: 'simple-icon-basket-loaded',
-        label: 'menu.ecommerce',
-        to: `${adminRoot}/dashboards/ecommerce`,
-        // roles: [UserRole.Editor],
-      },
-      {
-        icon: 'simple-icon-doc',
-        label: 'menu.content',
-        to: `${adminRoot}/dashboards/content`,
-        // roles: [UserRole.Editor],
-      },
-    ],
   },
   {
       id: 'events',
       icon: 'iconsminds-book',
       label: 'menu.events',
-      to: `${adminRoot}/events`,
+      to: `${adminRoot}/events/add`,
       subs: [
           {
               id: 'create-event',
               label: 'menu.new-event',
               to: `${adminRoot}/events/add`,
-          }
+          },
+          {
+            id: 'generate-event-report',
+            label: 'Reports',
+            to: `${adminRoot}/events/reports`,
+        }
       ]
   },
   {
@@ -68,137 +47,13 @@ const data = [
             label: 'menu.employees',
             to: `${adminRoot}/employees/view`,
           },
-          //   {
-          //     icon: 'simple-icon-user-follow',
-          //     label: 'menu.register',
-          //     to: '/user/register',
-          //     newWindow: true,
-          //   },
-          //   {
-          //     icon: 'simple-icon-user-following',
-          //     label: 'menu.forgot-password',
-          //     to: '/user/forgot-password',
-          //     newWindow: true,
-          //   },
-          //   {
-          //     icon: 'simple-icon-user-unfollow',
-          //     label: 'menu.reset-password',
-          //     to: '/user/reset-password',
-          //     newWindow: true,
-          //   },
+          {
+            icon: 'simple-icon-user-following',
+            label: 'Reports',
+            to: `${adminRoot}/employees/reports`,
+          },
         ],
       },
-      //   {
-      //     id: 'pages-product',
-      //     label: 'menu.product',
-      //     to: `${adminRoot}/pages/product`,
-      //     subs: [
-      //       {
-      //         icon: 'simple-icon-credit-card',
-      //         label: 'menu.data-list',
-      //         to: `${adminRoot}/pages/product/data-list`,
-      //       },
-      //       {
-      //         icon: 'simple-icon-list',
-      //         label: 'menu.thumb-list',
-      //         to: `${adminRoot}/pages/product/thumb-list`,
-      //       },
-      //       {
-      //         icon: 'simple-icon-grid',
-      //         label: 'menu.image-list',
-      //         to: `${adminRoot}/pages/product/image-list`,
-      //       },
-      //       {
-      //         icon: 'simple-icon-picture',
-      //         label: 'menu.details',
-      //         to: `${adminRoot}/pages/product/details`,
-      //       },
-      //       {
-      //         icon: 'simple-icon-book-open',
-      //         label: 'menu.details-alt',
-      //         to: `${adminRoot}/pages/product/details-alt`,
-      //       },
-      //     ],
-      //   },
-      //   {
-      //     id: 'pages-profile',
-      //     label: 'menu.profile',
-      //     to: `${adminRoot}/pages/profile`,
-      //     subs: [
-      //       {
-      //         icon: 'simple-icon-share',
-      //         label: 'menu.social',
-      //         to: `${adminRoot}/pages/profile/social`,
-      //       },
-      //       {
-      //         icon: 'simple-icon-link',
-      //         label: 'menu.portfolio',
-      //         to: `${adminRoot}/pages/profile/portfolio`,
-      //       },
-      //     ],
-      //   },
-      //   {
-      //     id: 'pages-blog',
-      //     label: 'menu.blog',
-      //     to: `${adminRoot}/pages/blog`,
-      //     subs: [
-      //       {
-      //         icon: 'simple-icon-share',
-      //         label: 'menu.blog-list',
-      //         to: `${adminRoot}/pages/blog/blog-list`,
-      //       },
-      //       {
-      //         icon: 'simple-icon-link',
-      //         label: 'menu.blog-detail',
-      //         to: `${adminRoot}/pages/blog/blog-detail`,
-      //       },
-      //     ],
-      //   },
-      //   {
-      //     id: 'pages-miscellaneous',
-      //     label: 'menu.miscellaneous',
-      //     to: `${adminRoot}/pages/miscellaneous`,
-      //     subs: [
-      //       {
-      //         icon: 'simple-icon-question',
-      //         label: 'menu.faq',
-      //         to: `${adminRoot}/pages/miscellaneous/faq`,
-      //       },
-      //       {
-      //         icon: 'simple-icon-graduation',
-      //         label: 'menu.knowledge-base',
-      //         to: `${adminRoot}/pages/miscellaneous/knowledge-base`,
-      //       },
-
-      //       {
-      //         icon: 'simple-icon-diamond',
-      //         label: 'menu.prices',
-      //         to: `${adminRoot}/pages/miscellaneous/prices`,
-      //       },
-      //       {
-      //         icon: 'simple-icon-magnifier',
-      //         label: 'menu.search',
-      //         to: `${adminRoot}/pages/miscellaneous/search`,
-      //       },
-      //       {
-      //         icon: 'simple-icon-envelope-open',
-      //         label: 'menu.mailing',
-      //         to: `${adminRoot}/pages/miscellaneous/mailing`,
-      //       },
-      //       {
-      //         icon: 'simple-icon-bag',
-      //         label: 'menu.invoice',
-      //         to: `${adminRoot}/pages/miscellaneous/invoice`,
-      //       },
-
-      //       {
-      //         icon: 'simple-icon-exclamation',
-      //         label: 'menu.error',
-      //         to: '/error',
-      //         newWindow: true,
-      //       },
-      //     ],
-      //   },
     ],
   },
   {

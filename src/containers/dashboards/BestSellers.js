@@ -101,22 +101,29 @@ const BestSellers = () => {
   const cols = React.useMemo(
     () => [
       {
-        Header: 'Name',
+        Header: 'Type',
         accessor: 'title',
         cellClass: 'text-muted w-50',
         Cell: (props) => <>{props.value}</>,
         sortType: 'basic',
       },
       {
-        Header: 'Sales',
+        Header: 'Assigned',
         accessor: 'sales',
         cellClass: 'text-muted w-25',
         Cell: (props) => <>{props.value}</>,
         sortType: 'basic',
       },
       {
-        Header: 'Stock',
+        Header: 'Unassigned',
         accessor: 'stock',
+        cellClass: 'text-muted w-25',
+        Cell: (props) => <>{props.value}</>,
+        sortType: 'basic',
+      },
+      {
+        Header: 'Total',
+        accessor: 'total',
         cellClass: 'text-muted w-25',
         Cell: (props) => <>{props.value}</>,
         sortType: 'basic',
@@ -129,7 +136,7 @@ const BestSellers = () => {
     <Card className="h-100">
       <CardBody>
         <CardTitle>
-          <IntlMessages id="dashboards.best-sellers" />
+          <IntlMessages id="Employees" />
         </CardTitle>
         <Table columns={cols} data={products} />
       </CardBody>

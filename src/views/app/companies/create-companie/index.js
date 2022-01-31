@@ -15,47 +15,50 @@ const CreateEvent = ({ match }) => {
       </Row>
       <Row>
         <Colxx xxs="12" className="mb-4">
-            <Colxx xxs="5" className="mb-4">
-                <InputGroup size="sm" className="mb-3">
-                    <Input placeholder="Company Name"/>
-                </InputGroup>
-            </Colxx>
-            <Colxx xxs="5" className="mb-4">
-                <InputGroup size="sm" className="mb-3">
-                    <Input placeholder="Street Name"/>
-                </InputGroup>
-            </Colxx>
-            <Colxx xxs="5" className="mb-4">
-                <InputGroup size="sm" className="mb-3">
-                    <Input placeholder="City"/>
-                </InputGroup>
-            </Colxx>
-            <Colxx xxs="5" className="mb-4">
-                <InputGroup size="sm" className="mb-3">
-                    <Input placeholder="ST"/>
-                </InputGroup>
-            </Colxx>
-            <Colxx xxs="5" className="mb-4">
-                <InputGroup size="sm" className="mb-3">
-                    <Input placeholder="ZIP Code"/>
-                </InputGroup>
-            </Colxx>
-            <Colxx xxs="5" className="mb-4">
-                <InputGroup size="sm" className="mb-3">
-                    <Input placeholder="Button Add Departament"/>
-                </InputGroup>
-            </Colxx>
-            <Colxx xxs="5" className="mb-4">
-                <InputGroup size="sm" className="mb-3">
-                    <Input placeholder="Department"/>
-                </InputGroup>
-            </Colxx>
-            <Colxx xxs="5" className="mb-4">
-                <InputGroup size="sm" className="mb-3">
-                    <Input placeholder="Main Contact: Full Name / Phone Number"/>
-                </InputGroup>
-            </Colxx>
-            <Colxx xxs="5" className="mb-4">
+            <Row>
+
+                <Colxx xxs="12" xl="6" className="mb-4">
+                    <InputGroup size="sm" className="mb-3">
+                        <Input placeholder="Company Name"/>
+                    </InputGroup>
+                </Colxx>
+                <Colxx xxs="12" xl="6" className="mb-4">
+                    <InputGroup size="sm" className="mb-3">
+                        <Input placeholder="Street Name"/>
+                    </InputGroup>
+                </Colxx>
+                <Colxx xxs="12" xl="6" className="mb-4">
+                    <InputGroup size="sm" className="mb-3">
+                        <Input placeholder="City"/>
+                    </InputGroup>
+                </Colxx>
+                <Colxx xxs="12" xl="6" className="mb-4">
+                    <InputGroup size="sm" className="mb-3">
+                        <Input placeholder="ST"/>
+                    </InputGroup>
+                </Colxx>
+                <Colxx xxs="12" xl="6" className="mb-4">
+                    <InputGroup size="sm" className="mb-3">
+                        <Input placeholder="ZIP Code"/>
+                    </InputGroup>
+                </Colxx>
+                <Colxx xxs="12" xl="6" className="mb-4">
+                    <InputGroup size="sm" className="mb-3">
+                        <Input placeholder="Button Add Departament"/>
+                    </InputGroup>
+                </Colxx>
+                <Colxx xxs="12" xl="6" className="mb-4">
+                    <InputGroup size="sm" className="mb-3">
+                        <Input placeholder="Department"/>
+                    </InputGroup>
+                </Colxx>
+                <Colxx xxs="12" xl="6" className="mb-4">
+                    <InputGroup size="sm" className="mb-3">
+                        <Input placeholder="Main Contact: Full Name / Phone Number"/>
+                    </InputGroup>
+                </Colxx>
+            </Row>
+            <Colxx xxs="12" xl="6" className="mb-4">
                 <Button color="success" className="mb-2">
                     <IntlMessages id="button.success" />
                 </Button>
