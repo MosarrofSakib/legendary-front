@@ -6,7 +6,7 @@ import Breadcrumb from 'containers/navs/Breadcrumb';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const BlankPage = ({ match }) => {
+const EditEmployee = ({ match }) => {
     const [startDate, setStartDate] = useState(new Date());
   return (
     <>
@@ -22,12 +22,12 @@ const BlankPage = ({ match }) => {
 
                 <Colxx xxs="12" xl="6" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="Name"/>
+                        <Input placeholder="Name" value="Otto"/>
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="Last Name"/>
+                        <Input placeholder="Last Name" value="Otto"/>
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
@@ -110,7 +110,7 @@ const BlankPage = ({ match }) => {
             </Row>
             <Colxx xxs="12" xl="6" className="mb-4">
                 <Button color="success" className="mb-2">
-                    <IntlMessages id="button.success" />
+                    <IntlMessages id="Save" />
                 </Button>
             </Colxx>
         </Colxx>
@@ -119,4 +119,4 @@ const BlankPage = ({ match }) => {
   );
 };
 
-export default BlankPage;
+export default EditEmployee;

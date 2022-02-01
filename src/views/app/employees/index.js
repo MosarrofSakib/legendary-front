@@ -9,6 +9,17 @@ const ViewEmployees = React.lazy(() =>
   import(/* webpackChunkName: "ui-forms" */ './view-employee')
 );
 
+const DetailEmployee = React.lazy(() =>
+  import(/* webpackChunkName: "ui-forms" */ './details-employee')
+);
+
+const EditEmployee = React.lazy(() =>
+  import(/* webpackChunkName: "ui-forms" */ './edit-employee')
+);
+
+const ReportsEmployees = React.lazy(() =>
+  import(/* webpackChunkName: "ui-forms" */ './reports-employees')
+);
 
 const UI = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
@@ -21,6 +32,18 @@ const UI = ({ match }) => (
       <Route
         path={`${match.url}/view`}
         render={(props) => <ViewEmployees {...props} />}
+      />
+      <Route
+        path={`${match.url}/details`}
+        render={(props) => <DetailEmployee {...props} />}
+      />
+      <Route
+        path={`${match.url}/edit`}
+        render={(props) => <EditEmployee {...props} />}
+      />
+      <Route
+        path={`${match.url}/reports`}
+        render={(props) => <ReportsEmployees {...props} />}
       />
       <Redirect to="/error" />
     </Switch>

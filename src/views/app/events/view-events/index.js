@@ -6,10 +6,10 @@ import Breadcrumb from 'containers/navs/Breadcrumb';
 
 const ViewEmployees = ({ match }) => {
 	const sendToDetails = () => {
-		window.location.href = "/app/employees/details"
+		window.location.href = "/app/events/details"
 	}
 	const sendToEditEmployee = ()=>{
-		window.location.href = "/app/employees/edit";
+		window.location.href = "/app/events/edit";
 	}
   return (
     <>
@@ -35,18 +35,20 @@ const ViewEmployees = ({ match }) => {
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Username</th>
+                    <th>Companie</th>
+                    <th>Name of the event</th>
+                    <th>Department</th>
+                    <th>Contacts</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
+                    <td>Microsft</td>
+                    <td>End Year</td>
+                    <td>Systems</td>
+                    <td>557894144, 43124434, 543545345</td>
                     <td>
                         <Button color="success" className="mb-2" onClick={sendToDetails}>
                             <IntlMessages id="View Details" />
@@ -56,22 +58,8 @@ const ViewEmployees = ({ match }) => {
                         </Button>
                     </td>
                   </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Yahir</td>
-                    <td>Sep</td>
-                    <td>@Yasep</td>
-                    <td>
-                        <Button color="success" className="mb-2">
-                            <IntlMessages id="View Details" />
-                        </Button>
-                        <Button color="success" className="mb-2">
-                            <IntlMessages id="Edit" />
-                        </Button>
-                    </td>
-                  </tr>
                 </tbody>
-              </Table>
+            </Table>
         </Colxx>
       </Row>
     </>
