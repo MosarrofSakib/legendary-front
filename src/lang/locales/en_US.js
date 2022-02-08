@@ -147,7 +147,12 @@ module.exports = {
   'menu.layouts': 'Layouts',
   'menu.validations': 'Validations',
   'menu.wizard': 'Wizard',
-
+  'menu.employees': 'Empleados',
+  'menu.restaurant': 'Companies',
+  'menu.new-employee': 'Añadir empleado',
+  'menu.new-company': 'Add companies',
+  'menu.events': 'Eventos',
+  'menu.new-event': 'Añadir evento',
   /* 04.Dashboards */
   'dashboards.pending-orders': 'Pending Orders',
   'dashboards.completed-orders': 'Completed Orders',

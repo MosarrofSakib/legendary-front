@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { configureStore } from './redux/store';
 import reportWebVitals from './reportWebVitals';
+import "rsuite/dist/rsuite.min.css";
 
 const App = React.lazy(() => import(/* webpackChunkName: "App" */ './App'));
 
