@@ -233,10 +233,15 @@ const BlankPage = ({ match }) => {
             <Separator className="mb-5" />
             </Colxx>
         </Row>
-        <Steps current={step}>
-            <Steps.Item />
-            <Steps.Item />
-        </Steps>
+        <Row>
+            <Colxx xxs="12">
+                <Steps current={step}>
+                    <Steps.Item />
+                    <Steps.Item />
+                </Steps>
+            </Colxx>
+        </Row>
+
         {step === 0 && (
             formOne
         )}
