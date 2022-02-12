@@ -1,72 +1,42 @@
-import React from 'react';
-import { Row, InputGroup, Input, Button} from 'reactstrap';
-import IntlMessages from 'helpers/IntlMessages';
+import React, {useState} from 'react';
+import { Row} from 'reactstrap';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
-import Breadcrumb from 'containers/navs/Breadcrumb';
+import FirstFormCompanies from './FirstFormCompanies';
+import SecondFormCompanies from './SecondFormCompanies';
+import TrFormCompanies from './TrFormCompanies';
+import { Steps } from 'rsuite';
+import "react-datepicker/dist/react-datepicker.css";
 
-const CreateEvent = ({ match }) => {
+const CreateCompanie = ({ match }) => {
+    const [step, setStep] = useState(0);
+
+    const changeStep = (stepNumber)=>{
+        setStep(stepNumber);
+    }
+
   return (
     <>
-      <Row>
-        <Colxx xxs="12">
-          <Breadcrumb heading="menu.new-company" match={match} />
-          <Separator className="mb-5" />
-        </Colxx>
-      </Row>
-      <Row>
-        <Colxx xxs="12" className="mb-4">
-            <Row>
-
-                <Colxx xxs="12" xl="6" className="mb-4">
-                    <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="Company Name"/>
-                    </InputGroup>
-                </Colxx>
-                <Colxx xxs="12" xl="6" className="mb-4">
-                    <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="Street Name"/>
-                    </InputGroup>
-                </Colxx>
-                <Colxx xxs="12" xl="6" className="mb-4">
-                    <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="City"/>
-                    </InputGroup>
-                </Colxx>
-                <Colxx xxs="12" xl="6" className="mb-4">
-                    <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="ST"/>
-                    </InputGroup>
-                </Colxx>
-                <Colxx xxs="12" xl="6" className="mb-4">
-                    <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="ZIP Code"/>
-                    </InputGroup>
-                </Colxx>
-                <Colxx xxs="12" xl="6" className="mb-4">
-                    <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="Button Add Departament"/>
-                    </InputGroup>
-                </Colxx>
-                <Colxx xxs="12" xl="6" className="mb-4">
-                    <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="Department"/>
-                    </InputGroup>
-                </Colxx>
-                <Colxx xxs="12" xl="6" className="mb-4">
-                    <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="Main Contact: Full Name / Phone Number"/>
-                    </InputGroup>
-                </Colxx>
-            </Row>
-            <Colxx xxs="12" xl="6" className="mb-4">
-                <Button color="success" className="mb-2">
-                    <IntlMessages id="button.success" />
-                </Button>
+        <Row>
+            <Colxx xxs="12">
+                <Steps current={step}>
+                    <Steps.Item />
+                    <Steps.Item />
+                    <Steps.Item />
+                </Steps>
+              <Separator className="mb-5" />
             </Colxx>
-        </Colxx>
-      </Row>
+        </Row>
+        {step === 0 && (
+            <FirstFormCompanies changeStep={changeStep}/>
+        )}
+        {step === 1 && (
+            <SecondFormCompanies changeStep={changeStep}/>
+        )}
+        {step === 2 && (
+            <TrFormCompanies changeStep={changeStep}/>
+        )}
     </>
   );
 };
 
-export default CreateEvent;
+export default CreateCompanie;

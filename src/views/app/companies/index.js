@@ -1,8 +1,8 @@
 import React, { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-const CreateCompanie = React.lazy(() =>
-  import(/* webpackChunkName: "ui-forms" */ './create-companie')
+const ViewCompanies = React.lazy(() =>
+  import(/* webpackChunkName: "ui-forms" */ './view-companies')
 );
 
 const UI = ({ match }) => (
@@ -10,8 +10,8 @@ const UI = ({ match }) => (
     <Switch>
       <Redirect exact from={`${match.url}/`} to={`${match.url}/forms`} />
       <Route
-        path={`${match.url}/add`}
-        render={(props) => <CreateCompanie {...props} />}
+        path={`${match.url}/view`}
+        render={(props) => <ViewCompanies {...props} />}
       />
       <Redirect to="/error" />
     </Switch>

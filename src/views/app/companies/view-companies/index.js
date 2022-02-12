@@ -1,43 +1,43 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import { Row, Table,Button, Modal, ModalBody} from 'reactstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import Breadcrumb from 'containers/navs/Breadcrumb';
-import CreateEvent from '../create-event';
-
-const ViewEmployees = ({ match }) => {
-	const [modal,setModal] = useState(false);
+import CreateCompanie from "../create-companie";
+const ViewComapanies = ({ match }) => {
+    const [modal, setModal] = useState(false);
 	const sendToDetails = () => {
-		window.location.href = "/app/events/details"
+		window.location.href = "/app/employees/details"
 	}
 	const sendToEditEmployee = ()=>{
-		window.location.href = "/app/events/edit";
+		window.location.href = "/app/employees/edit";
 	}
   return (
+
     <>
       <Row>
         <Colxx xxs="12">
-          <Breadcrumb heading="menu.employees" match={match} />
+          <Breadcrumb heading="Companies" match={match} />
           <Separator className="mb-5" />
         </Colxx>
       </Row>
       <Row>
             <Colxx xxs="12" xl="12" className="mb-4">
-				<Button color="success" className="mb-2" onClick={()=>setModal(true)}>
-					<IntlMessages id="+ Add Event" />
+				<Button color="success" className="mb-2"  onClick={() => setModal(true)}>
+					<IntlMessages id="+ Add Companie" />
 				</Button>
 				<Button color="success" className="mb-2">
 					<IntlMessages id="View Reports" />
 				</Button>
             </Colxx>
       </Row>
-      <Modal
-			isOpen={modal}
-			toggle={() => setModal(!modal)}
-		>
-			<ModalBody>
-				<CreateEvent />
-			</ModalBody>
+        <Modal
+            isOpen={modal}
+            toggle={() => setModal(!modal)}
+        >
+                <ModalBody>
+                    <CreateCompanie />
+                </ModalBody>
         </Modal>
       <Row>
         <Colxx xxs="12" className="mb-4">
@@ -45,20 +45,24 @@ const ViewEmployees = ({ match }) => {
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>Companie</th>
-                    <th>Name of the event</th>
-                    <th>Department</th>
-                    <th>Contacts</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Pincode</th>
+                    <th>Phone</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <th scope="row">1</th>
-                    <td>Microsft</td>
-                    <td>End Year</td>
-                    <td>Systems</td>
-                    <td>557894144, 43124434, 543545345</td>
+                    <td>Test companie</td>
+                    <td>HOF</td>
+                    <td>EU</td>
+                    <td>California</td>
+                    <td>030303</td>
+                    <td>559393938</td>
                     <td>
                         <Button color="success" className="mb-2" onClick={sendToDetails}>
                             <IntlMessages id="View Details" />
@@ -69,11 +73,11 @@ const ViewEmployees = ({ match }) => {
                     </td>
                   </tr>
                 </tbody>
-            </Table>
+              </Table>
         </Colxx>
       </Row>
     </>
   );
 };
 
-export default ViewEmployees;
+export default ViewComapanies;

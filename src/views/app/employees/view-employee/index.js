@@ -1,10 +1,11 @@
-import React from 'react';
-import { Row, Table,Button} from 'reactstrap';
+import React, { useState } from 'react';
+import { Row, Table,Button, Modal, ModalBody } from 'reactstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import Breadcrumb from 'containers/navs/Breadcrumb';
-
+import CreateEmploye from '../create-employee';
 const ViewEmployees = ({ match }) => {
+  const [modal, setModal] = useState(false);
 	const sendToDetails = () => {
 		window.location.href = "/app/employees/details"
 	}
@@ -21,14 +22,22 @@ const ViewEmployees = ({ match }) => {
       </Row>
       <Row>
             <Colxx xxs="12" xl="12" className="mb-4">
-				<Button color="success" className="mb-2">
-					<IntlMessages id="+ Add New" />
+				<Button color="success" className="mb-2" onClick={()=> setModal(true)}>
+					<IntlMessages id="+ Add Employee" />
 				</Button>
 				<Button color="success" className="mb-2">
 					<IntlMessages id="View Reports" />
 				</Button>
             </Colxx>
       </Row>
+		<Modal
+			isOpen={modal}
+			toggle={() => setModal(!modal)}
+		>
+			<ModalBody>
+				<CreateEmploye />
+			</ModalBody>
+        </Modal>
       <Row>
         <Colxx xxs="12" className="mb-4">
             <Table striped>
