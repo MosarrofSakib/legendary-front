@@ -1,18 +1,20 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { Row, InputGroup, Input, Button, InputGroupAddon, CustomInput, } from 'reactstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import DatePicker from "react-datepicker";
 import { Steps } from 'rsuite';
+import { useEmployeesHooks } from 'hooks';
 import "react-datepicker/dist/react-datepicker.css";
 
 const BlankPage = ({ match }) => {
-    const [startDate, setStartDate] = useState(new Date());
-    const [step, setStep] = useState(0);
-
-    const changeStep = ()=>{
-        setStep(1);
-    }
+    const {
+        step,
+        startDate,
+        changeStep,
+        saveData,
+        setStartDate
+    } = useEmployeesHooks();
     const formOne = (
         <>
       <Row>
@@ -24,7 +26,7 @@ const BlankPage = ({ match }) => {
 
                 <Colxx xxs="12" xl="6" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="Employee Name"/>
+                        <Input placeholder="Employee Name" onChange={({target}) => saveData(target.value,"name")} />
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
