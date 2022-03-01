@@ -8,6 +8,8 @@ import { Steps } from 'rsuite';
 import "react-datepicker/dist/react-datepicker.css";
 
 const CreateCompanie = ({ match }) => {
+    const [nameCompanie, setNameCompanie] = useState("");
+    const [emailCompanie, setEmailCompanie] = useState("");
     const [step, setStep] = useState(0);
 
     const changeStep = (stepNumber)=>{

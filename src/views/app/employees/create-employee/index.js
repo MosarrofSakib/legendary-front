@@ -1,20 +1,146 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, InputGroup, Input, Button, InputGroupAddon, CustomInput, } from 'reactstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import DatePicker from "react-datepicker";
 import { Steps } from 'rsuite';
-import { useEmployeesHooks } from 'hooks';
+import FormExperience from './formExperience';
 import "react-datepicker/dist/react-datepicker.css";
 
-const BlankPage = ({ match }) => {
-    const {
-        step,
-        startDate,
-        changeStep,
-        saveData,
-        setStartDate
-    } = useEmployeesHooks();
+const EmployeesForm = ({ setEmployees, employees }) => {
+    const [name, setName] = useState("");
+    const [lastname, setLastname] = useState("");
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
+    const [address, setAddress] = useState("");
+    const [role, setRole] = useState("");
+    const [skillLevel, setSkillLevel] = useState("");
+    const [experience, setExperience] = useState("");
+    const [ssn, setSsn] = useState("");
+    const [city, setCity] = useState("");
+    const [zipCode, setZipCode] = useState("");
+    const [perHourCharges, setPerHourCharges] = useState("");
+    const [martialStatus, setMartialStatus] = useState("");
+    const [gender, setGender] = useState("");
+    const [dateBirth, setDateBirth] = useState("");
+    const [englishLevel, setEnglishLevel] = useState("");
+    const [dateOfHiring, setDateOfHiring] = useState("");
+    const [healtInsurance, setHealtInsurance] = useState("");
+    const [experienceInCompanies, setExperienceInCompanies] = useState([]);
+    const [sendData, setSendData] = useState(false);
+    const [startDate, setStartDate] = useState(new Date());
+    const [idExperience,setIdExperience] = useState(0);
+    const [step, setStep] = useState(0);
+
+    const changeStep = ()=>{
+        setStep(1);
+    }
+
+    const saveData = (dataValue, type) => {
+        const options = {
+            name: (value) => setName(value),
+            lastname: (value) => setLastname(value),
+            email: (value) => setEmail(value),
+            phone: (value) => setPhone(value),
+            address: (value) => setAddress(value),
+            role: (value) => setRole(value),
+            skillLevel: (value) => setSkillLevel(value),
+            experience: (value) => setExperience(value),
+            ssn: (value) => setSsn(value),
+            city: (value) => setCity(value),
+            zipCode: (value) => setZipCode(value),
+            perHourCharges: (value) => setPerHourCharges(value),
+            martialStatus: (value) => setMartialStatus(value),
+            gender: value => setGender(value),
+            dateBirth: value => setDateBirth(value),
+            englishLevel: value => setEnglishLevel(value),
+            dateOfHiring: value => setDateOfHiring(value),
+            healtInsurance: value => setHealtInsurance(value),
+            sendData: () => setSendData(true),
+        };
+        options[type](dataValue);
+    }
+
+    useEffect(() => {
+
+    },[sendData])
+
+
+    const addMoreExperience = () => {
+        const newIdExperience = idExperience+1;
+        const newExperience = [
+            ...experienceInCompanies,
+            {
+                organizationName: "",
+                organizationAddress: "",
+                from: "",
+                to: "",
+                iAmStillWorkingHere: false,
+                idExperience: newIdExperience
+            }
+        ];
+        setIdExperience(newIdExperience);
+        setExperienceInCompanies([]);
+        setExperienceInCompanies(newExperience);
+    }
+
+    const deleteExperience = (idExperience) => {
+        const newExperienceInCompanies = [
+            ...experienceInCompanies
+        ]
+        setExperienceInCompanies([]);
+        const indexOfExperience = newExperienceInCompanies
+        .map((data) => data.idExperience)
+        .indexOf(idExperience);
+        if (indexOfExperience > -1) {
+            newExperienceInCompanies.splice(indexOfExperience, 1);
+        }
+        setExperienceInCompanies(newExperienceInCompanies);
+    }
+
+    const writeDataExperience = (idExperience, data, value) => {
+        let newExperiences = [
+            ...experienceInCompanies
+        ]
+        setExperienceInCompanies([])
+        newExperiences = newExperiences.map((obj) => {
+            if (obj.idExperience === idExperience) {
+                return { 
+                    ...obj, 
+                    [value]: data
+                };
+            }
+
+            return obj;
+        });
+        setExperienceInCompanies(newExperiences);
+    }
+
+    const saveEmployee = () => {
+        const oldEmployees = [...employees]
+        const newEmployee = {
+            name,
+            lastname,
+            email,
+            phone,
+            address,
+            role,
+            skillLevel,
+            experience,
+            ssn,
+            city,
+            zipCode,
+            perHourCharges,
+            martialStatus,
+            gender,
+            dateBirth,
+            englishLevel,
+            dateOfHiring,
+            healtInsurance
+        }
+        oldEmployees.push(newEmployee);
+        setEmployees(oldEmployees);
+    }
     const formOne = (
         <>
       <Row>
@@ -23,26 +149,30 @@ const BlankPage = ({ match }) => {
         </Colxx>
         <Colxx xxs="12" className="mb-4">
             <Row>
-
                 <Colxx xxs="12" xl="6" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="Employee Name" onChange={({target}) => saveData(target.value,"name")} />
+                        <Input placeholder="Employee Name" onChange={({target}) => saveData(target.value, "name")} />
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="Email Address"/>
+                        <Input placeholder="Employee lastname" onChange={({target}) => saveData(target.value, "lastname")} />
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input type="checkbox" aria-label="Select all roles" />
+                        <Input placeholder="Email Address" onChange={({target}) => saveData(target.value, "email")}/>
+                    </InputGroup>
+                </Colxx>
+                <Colxx xxs="12" xl="6" className="mb-4">
+                    <InputGroup size="sm" className="mb-3">
+                        <Input type="checkbox" aria-label="Select all roles" onChange={({target}) => saveData("all", "role")}/>
                         Select all roles
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input type="select" placeholder="Companies Selection">
+                        <Input type="select" placeholder="Companies Selection" onChange={({target}) => saveData(target.value, "role")}>
                             <option value="">Select Role</option>
                             <option>Administrative</option>
                             <option>Chieff</option>
@@ -52,7 +182,7 @@ const BlankPage = ({ match }) => {
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input type="select" placeholder="Companies Selection">
+                        <Input type="select" placeholder="Companies Selection" onChange={({target}) => saveData(target.value, "skillLevel")}>
                             <option value="">Skill level</option>
                             <option>Beginner</option>
                             <option>Pro</option>
@@ -62,79 +192,74 @@ const BlankPage = ({ match }) => {
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="Experience"/>
+                        <Input placeholder="Experience" onChange={({target}) => saveData(target.value, "experience")}/>
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="Phone"/>
+                        <Input placeholder="Phone" onChange={({target}) => saveData(target.value, "phone")}/>
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="12" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="Address"/>
+                        <Input placeholder="Address" onChange={({target}) => saveData(target.value, "address")}/>
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="SSN No."/>
+                        <Input placeholder="SSN No." onChange={({target}) => saveData(target.value, "ssn")}/>
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="City/Location"/>
+                        <Input placeholder="City/Location" onChange={({target}) => saveData(target.value, "city")}/>
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="Zip Code"/>
+                        <Input placeholder="Zip Code" onChange={({target}) => saveData(target.value, "zipCode")}/>
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="Per Hour Charges"/>
+                        <Input placeholder="Per Hour Charges" onChange={({target}) => saveData(target.value,"perHourCharges")}/>
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
                         Martial Status
                     <InputGroup size="sm" className="mb-3">
-                        <Input type="radio" aria-label="Single" />
+                        <Input type="radio" aria-label="Single" onChange={() => saveData("single","martialStatus")}/>
                         Single
                     </InputGroup>
                     <InputGroup size="sm" className="mb-3">
-                        <Input type="radio" aria-label="Married" />
+                        <Input type="radio" aria-label="Married" onChange={() => saveData("married","lastname")}/>
                         Married
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
                         Gender
                     <InputGroup size="sm" className="mb-3">
-                        <Input type="radio" aria-label="Female" />
+                        <Input type="radio" aria-label="Female" onChange={() => saveData("female","gender")}/>
                         Female
                     </InputGroup>
                     <InputGroup size="sm" className="mb-3">
-                        <Input type="radio" aria-label="Male" />
+                        <Input type="radio" aria-label="Male" onChange={() => saveData("male","gender")}/>
                         Male
                     </InputGroup>
                     <InputGroup size="sm" className="mb-3">
-                        <Input type="radio" aria-label="Other" />
+                        <Input type="radio" aria-label="Other" onChange={() => saveData("other","gender")}/>
                         Other
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
                         Date of birth: 
-                        <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
+                        <DatePicker selected={startDate} onChange={(date) => saveData(date,"dateBirth")} />
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="SSN"/>
-                    </InputGroup>
-                </Colxx>
-                <Colxx xxs="12" xl="6" className="mb-4">
-                    <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="English Level"/>
+                        <Input placeholder="English Level" onChange={({target}) => saveData(target.value,"englishLevel")}/>
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
@@ -181,40 +306,13 @@ const BlankPage = ({ match }) => {
 
     const formTwo = (
             <Row>
-                <Colxx xxs="12" xl="6" className="mb-4">
-                    <InputGroup>
-                        <Input placeholder="Organization Name" />
-                    </InputGroup>
+                {experienceInCompanies.map(data => <FormExperience {...data} deleteExperience={deleteExperience} />)}
+                <Colxx xxs="12" className="mb-4">    
+                    <Button color="success" className="mb-2" onClick={addMoreExperience} >
+                        <IntlMessages id="Add more experience"/>
+                    </Button>
                 </Colxx>
-                <Colxx xxs="12" xl="6" className="mb-4">
-                    <InputGroup>
-                        <Input placeholder="Address" />
-                    </InputGroup>
-                </Colxx>
-                <Colxx xxs="12" xl="6" className="mb-4">
-                    <InputGroup size="sm" className="mb-3">
-                        From:
-                        <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
-                    </InputGroup>
-                </Colxx>
-                <Colxx xxs="12" xl="6" className="mb-4">
-                    <InputGroup size="sm" className="mb-3">
-                        To:
-                        <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
-                    </InputGroup>
-                </Colxx>
-                <Colxx xxs="12" xl="6" className="mb-4">
-                    <InputGroup size="sm" className="mb-3">
-                        <Input type="checkbox" aria-label="Select all roles" />
-                        I am still working here
-                    </InputGroup>
-                </Colxx>
-                <Colxx xxs="12" xl="6" className="mb-4">    
-                <Button color="success" className="mb-2" >
-                    <IntlMessages id="Add more experience"/>
-                </Button>
-            </Colxx>
-                <Colxx xxs="12" xl="6" className="mb-4">
+                <Colxx xxs="12" className="mb-4">
                     <InputGroup className="mb-3">
                         <InputGroupAddon addonType="prepend">Upload resume</InputGroupAddon>
                         <CustomInput
@@ -223,6 +321,11 @@ const BlankPage = ({ match }) => {
                         name="customFile"
                         />
                     </InputGroup>
+                </Colxx>
+                <Colxx xxs="12" className="mb-4">    
+                    <Button color="success" className="mb-2" onClick={saveEmployee}>
+                        <IntlMessages id="Guardar"/>
+                    </Button>
                 </Colxx>
             </Row>
     )
@@ -247,4 +350,4 @@ const BlankPage = ({ match }) => {
   );
 };
 
-export default BlankPage;
+export default EmployeesForm;

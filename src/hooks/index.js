@@ -1,1 +1,1 @@
-export * as useEmployeesHooks from "./employeesHooks"; 
+export * as employeesHooks from "./employeesHooks"; 
