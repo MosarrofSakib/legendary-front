@@ -3,7 +3,7 @@ import { Row, InputGroup, Input, Button, InputGroupAddon, CustomInput} from 'rea
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 
-function SecondFormCompanies({changeStep}){
+function SecondFormCompanies({changeStep, saveData}){
     return(
         <Row>
             <Colxx xxs="12" className="mb-4">
@@ -11,52 +11,52 @@ function SecondFormCompanies({changeStep}){
 
                     <Colxx xxs="12" xl="12" className="mb-4">
                         <InputGroup size="sm" className="mb-3">
-                            <Input placeholder="Title"/>
+                            <Input placeholder="Title" onChange={({target})=> saveData(target.value,"title")}/>
                         </InputGroup>
                     </Colxx>
                     <Colxx xxs="12" xl="6" className="mb-4">
                         <InputGroup size="sm" className="mb-3">
-                            <Input placeholder="Bussines Contact Person Name"/>
+                            <Input placeholder="Bussines Contact Person Name" onChange={({target})=> saveData(target.value,"bussinessContactName")}/>
                         </InputGroup>
                     </Colxx>
                     <Colxx xxs="12" xl="6" className="mb-4">
                         <InputGroup size="sm" className="mb-3">
-                            <Input placeholder="Bussines Phone"/>
+                            <Input placeholder="Bussines Phone" onChange={({target})=> saveData(target.value,"bussinessContactPhone")}/>
                         </InputGroup>
                     </Colxx>
                     <Colxx xxs="12" xl="6" className="mb-4">
                         <InputGroup size="sm" className="mb-3">
-                            <Input placeholder="Bussiness Email"/>
+                            <Input placeholder="Bussiness Email" onChange={({target})=> saveData(target.value,"bussinessContactEmail")}/>
                         </InputGroup>
                     </Colxx>
                     <Colxx xxs="12" xl="6" className="mb-4">
                         <InputGroup size="sm" className="mb-3">
-                            <Input placeholder="Apartment Name"/>
+                            <Input placeholder="Apartment Name" onChange={({target})=> saveData(target.value,"apartmentName")}/>
                         </InputGroup>
                     </Colxx>
                     <Colxx xxs="12" xl="6" className="mb-4">
                         <InputGroup size="sm" className="mb-3">
-                            <Input placeholder="Apartment Category" />
+                            <Input placeholder="Apartment Category" onChange={({target})=> saveData(target.value,"apartmentCategory")}/>
                         </InputGroup>
                     </Colxx>
                     <Colxx xxs="12" xl="6" className="mb-4">
                         <InputGroup size="sm" className="mb-3">
-                            <Input placeholder="Apartment Suite, No, etc."/>
+                            <Input placeholder="Apartment Suite, No, etc." onChange={({target})=> saveData(target.value,"apartmentAddress")}/>
                         </InputGroup>
                     </Colxx>
                     <Colxx xxs="12" xl="6" className="mb-4">
                         <InputGroup size="sm" className="mb-3">
-                            <Input placeholder="Apartment Contact Person Name"/>
+                            <Input placeholder="Apartment Contact Person Name" onChange={({target})=> saveData(target.value,"apartmentName")}/>
                         </InputGroup>
                     </Colxx>
                     <Colxx xxs="12" xl="6" className="mb-4">
                         <InputGroup size="sm" className="mb-3">
-                            <Input placeholder="Aparment Phone"/>
+                            <Input placeholder="Aparment Phone" onChange={({target})=> saveData(target.value,"apartmentPhone")}/>
                         </InputGroup>
                     </Colxx>
                     <Colxx xxs="12" xl="6" className="mb-4">
                         <InputGroup size="sm" className="mb-3">
-                            <Input placeholder="Apartment Email"/>
+                            <Input placeholder="Apartment Email" onChange={({target})=> saveData(target.value,"apartmentEmail")}/>
                         </InputGroup>
                     </Colxx>
                     <Colxx xxs="12" xl="6" className="mb-4">

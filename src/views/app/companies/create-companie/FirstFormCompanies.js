@@ -3,7 +3,7 @@ import { Row, InputGroup, Input, Button} from 'reactstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 
-function FirstFormCompanies({changeStep}){
+function FirstFormCompanies({changeStep, saveData}){
     return(
         <Row>
             <Colxx xxs="12" className="mb-4">
@@ -11,42 +11,42 @@ function FirstFormCompanies({changeStep}){
 
                     <Colxx xxs="12" xl="12" className="mb-4">
                         <InputGroup size="sm" className="mb-3">
-                            <Input placeholder="Company Name"/>
+                            <Input placeholder="Company Name" onChange={({target})=> saveData(target.value,"nameCompanie")}/>
                         </InputGroup>
                     </Colxx>
                     <Colxx xxs="12" xl="6" className="mb-4">
                         <InputGroup size="sm" className="mb-3">
-                            <Input placeholder="Email Id"/>
+                            <Input placeholder="Email Id" onChange={({target})=> saveData(target.value,"emailCompanie")}/>
                         </InputGroup>
                     </Colxx>
                     <Colxx xxs="12" xl="6" className="mb-4">
                         <InputGroup size="sm" className="mb-3">
-                            <Input placeholder="Phone" type="number"/>
+                            <Input placeholder="Phone" type="number" onChange={({target})=> saveData(target.value,"phoneCompanie")}/>
                         </InputGroup>
                     </Colxx>
                     <Colxx xxs="12" xl="6" className="mb-4">
                         <InputGroup size="sm" className="mb-3">
-                            <Input placeholder="Apartment, Suite, No, etc."/>
+                            <Input placeholder="Apartment, Suite, No, etc." onChange={({target})=> saveData(target.value,"address")}/>
                         </InputGroup>
                     </Colxx>
                     <Colxx xxs="12" xl="6" className="mb-4">
                         <InputGroup size="sm" className="mb-3">
-                            <Input placeholder="State"/>
+                            <Input placeholder="State" onChange={({target})=> saveData(target.value,"state")}/>
                         </InputGroup>
                     </Colxx>
                     <Colxx xxs="12" xl="6" className="mb-4">
                         <InputGroup size="sm" className="mb-3">
-                            <Input placeholder="Pincode"/>
+                            <Input placeholder="Pincode" onChange={({target})=> saveData(target.value,"pinCode")}/>
                         </InputGroup>
                     </Colxx>
                     <Colxx xxs="12" xl="6" className="mb-4">
                         <InputGroup size="sm" className="mb-3">
-                            <Input placeholder="City"/>
+                            <Input placeholder="City" onChange={({target})=> saveData(target.value,"city")}/>
                         </InputGroup>
                     </Colxx>
                     <Colxx xxs="12" xl="6" className="mb-4">
                         <InputGroup size="sm" className="mb-3">
-                            <Input type="select" placeholder="Companies Category">
+                            <Input type="select" placeholder="Companies Category" onChange={({target})=> saveData(target.value,"category")}>
                                 <option value="">Category</option>
                                 <option>FRONT OF THE HOUSE</option>
                                 <option>BACK OF THE HOUSE</option>

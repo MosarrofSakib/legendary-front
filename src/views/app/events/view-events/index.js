@@ -17,7 +17,7 @@ const ViewEmployees = ({ match }) => {
     <>
       <Row>
         <Colxx xxs="12">
-          <Breadcrumb heading="menu.employees" match={match} />
+          <Breadcrumb heading="menu.events" match={match} />
           <Separator className="mb-5" />
         </Colxx>
       </Row>
