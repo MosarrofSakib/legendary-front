@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import {
   BrowserRouter as Router,
@@ -17,6 +17,9 @@ import {
 import { getDirection } from './helpers/Utils';
 import { ProtectedRoute } from './helpers/authHelper';
 
+const Login = React.lazy(() =>
+  import(/* webpackChunkName: "user-login" */ './views/user/login')
+);
 const ViewApp = React.lazy(() =>
   import(/* webpackChunkName: "views-app" */ './views/app')
 );
@@ -31,6 +34,7 @@ const ViewUnauthorized = React.lazy(() =>
 );
 
 const App = ({ locale }) => {
+  const [userLoggued, setUserLoggued] = useState(false);
   const direction = getDirection();
   const currentAppLocale = AppLocale[locale];
   useEffect(() => {
@@ -43,46 +47,72 @@ const App = ({ locale }) => {
     }
   }, [direction]);
 
+  const getCookieValue = (name) => (
+	document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || ''
+  )
+
+  useEffect(()=>{
+	const cookie = getCookieValue("lgLegendary");
+	if (cookie === "Test") {
+		setUserLoggued(true);
+		// window.location = "/app/dashboards/default"
+	}
+  },[])
+//   adminRoot = userLoggued ? adminRoot :ç "/login";
   return (
     <div className="h-100">
-      <IntlProvider
-        locale={currentAppLocale.locale}
-        messages={currentAppLocale.messages}
-      >
-        <>
-          <NotificationContainer />
-          <Suspense fallback={<div className="loading" />}>
-            <Router>
-              <Switch>
-                <ProtectedRoute
-                  path={adminRoot}
-                  component={ViewApp}
-                  roles={[UserRole.Admin, UserRole.Editor]}
-                />
-                <Route
-                  path="/error"
-                  exact
-                  render={(props) => <ViewError {...props} />}
-                />
-                <Route
-                  path="/unauthorized"
-                  exact
-                  render={(props) => <ViewUnauthorized {...props} />}
-                />
-                <Route
-                  path="/app"
-                  exact
-                  render={(props) => <ViewUser {...props} />}
-                />
-                
-                <Redirect exact from="/" to={adminRoot} />
-               
-                <Redirect to="/error" />
-              </Switch>
-            </Router>
-          </Suspense>
-        </>
-      </IntlProvider>
+		<IntlProvider
+			locale={currentAppLocale.locale}
+			messages={currentAppLocale.messages}
+		>
+			<>
+			<NotificationContainer />
+			<Suspense fallback={<div className="loading" />}>
+				{!userLoggued && 
+					<Router>
+						<Switch>
+							<Route
+								path={`/login`}
+								render={(props) => <Login {...props} setUserLoggued={setUserLoggued} />}
+							/>
+							<Redirect exact from="/" to={"/login"} />
+						</Switch>
+					</Router>
+				}
+				{userLoggued && (
+					<Router>
+						<Switch>
+							<ProtectedRoute
+								path={adminRoot}
+								component={ViewApp}
+								roles={[UserRole.Admin, UserRole.Editor]}
+							/>
+							<Route
+								path="/error"
+								exact
+								render={(props) => <ViewError {...props} />}
+							/>
+							<Route
+								path="/unauthorized"
+								exact
+								render={(props) => <ViewUnauthorized {...props} />}
+							/>
+							<Route
+								path="/app"
+								exact
+								render={(props) => <ViewUser {...props} />}
+							/>
+							<Redirect exact from="/login" to={adminRoot} />
+							
+							<Redirect exact from="/" to={adminRoot} />
+							
+							<Redirect to="/error" />
+						</Switch>
+					</Router>
+				)}
+			</Suspense>
+			</>
+		</IntlProvider>
     </div>
   );
 };
