@@ -43,10 +43,12 @@ const Login = ({ history, loading, error, loginUserAction, setUserLoggued }) => 
 
   const onUserLogin = async (values) => {
     if (!loading) {
-      if (values.email !== '' && values.password !== '' && values.email === "test@legendary.com" && values.password === "TestPassword") {
-        await loginService(email,password);
-		document.cookie = "lgLegendary=Test";
-		setUserLoggued(true);
+      if (values.email !== '' && values.password !== '') {
+        const data = await loginService(email,password);
+		if(data.token){
+			document.cookie = `lgLegendary=${token}`;
+			setUserLoggued(true);
+		}
       }
     }
   };

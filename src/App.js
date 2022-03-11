@@ -56,7 +56,7 @@ const App = ({ locale }) => {
 
   useEffect(()=>{
 	const cookie = getCookieValue("lgLegendary");
-	if (cookie === "Test") {
+	if (cookie) {
 		setUserLoggued(true);
 		// window.location = "/app/dashboards/default"
 	}
