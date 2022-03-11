@@ -46,7 +46,7 @@ const Login = ({ history, loading, error, loginUserAction, setUserLoggued }) => 
       if (values.email !== '' && values.password !== '') {
         const data = await loginService(email,password);
 		if(data.token){
-			document.cookie = `lgLegendary=${token}`;
+			document.cookie = `lgLegendary=${data.token}`;
 			setUserLoggued(true);
 		}
       }
