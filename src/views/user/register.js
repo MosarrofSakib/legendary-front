@@ -15,16 +15,16 @@ import { registerUser } from 'redux/actions';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
-import { adminRoot } from 'constants/defaultValues';
+import { registerService } from '../../helpers/services/authServices';
 
 const Register = ({ history }) => {
-  const [email] = useState('demo@gogo.com');
-  const [password] = useState('gogo123');
+  const [email] = useState('demo@testemail.com');
+  const [password] = useState('test123');
   const [name] = useState('Sarah Kortney');
 
-  const onUserRegister = () => {
+  const onUserRegister = async () => {
     if (email !== '' && password !== '') {
-      history.push(adminRoot);
+      await registerService(email,password);
     }
     // call registerUserAction()
   };
@@ -34,7 +34,7 @@ const Register = ({ history }) => {
       <Colxx xxs="12" md="10" className="mx-auto my-auto">
         <Card className="auth-card">
           <div className="position-relative image-side ">
-            <p className="text-white h2">MAGIC IS IN THE DETAILS</p>
+            <p className="text-white h2">BEST EVENTS</p>
             <p className="white mb-0">
               Please use this form to register. <br />
               If you are a member, please{' '}

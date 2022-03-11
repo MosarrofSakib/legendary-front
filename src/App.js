@@ -20,6 +20,9 @@ import { ProtectedRoute } from './helpers/authHelper';
 const Login = React.lazy(() =>
   import(/* webpackChunkName: "user-login" */ './views/user/login')
 );
+const Register = React.lazy(() =>
+  import(/* webpackChunkName: "user-login" */ './views/user/register')
+);
 const ViewApp = React.lazy(() =>
   import(/* webpackChunkName: "views-app" */ './views/app')
 );
@@ -75,7 +78,18 @@ const App = ({ locale }) => {
 								path={`/login`}
 								render={(props) => <Login {...props} setUserLoggued={setUserLoggued} />}
 							/>
+							<Route
+								path={`/register`}
+								render={(props) => <Register {...props} setUserLoggued={setUserLoggued} />}
+							/>
+							<Route
+								path="/error"
+								exact
+								render={(props) => <ViewError {...props} />}
+							/>
 							<Redirect exact from="/" to={"/login"} />
+							<Redirect to="/error" />
+
 						</Switch>
 					</Router>
 				}

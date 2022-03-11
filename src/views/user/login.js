@@ -9,6 +9,7 @@ import { NotificationManager } from 'components/common/react-notifications';
 import { Colxx } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import { loginUser } from 'redux/actions';
+import { loginService } from 'helpers/services/authServices';
 
 const validatePassword = (value) => {
   let error;
@@ -40,10 +41,11 @@ const Login = ({ history, loading, error, loginUserAction, setUserLoggued }) => 
     }
   }, [error]);
 
-  const onUserLogin = (values) => {
+  const onUserLogin = async (values) => {
     if (!loading) {
       if (values.email !== '' && values.password !== '' && values.email === "test@legendary.com" && values.password === "TestPassword") {
-        document.cookie = "lgLegendary=Test";
+        await loginService(email,password);
+		document.cookie = "lgLegendary=Test";
 		setUserLoggued(true);
       }
     }
