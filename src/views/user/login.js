@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Card, CardTitle, Label, FormGroup, Button } from 'reactstrap';
+import { Row, Card, CardTitle, Label, FormGroup, Button, Input } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -32,8 +32,8 @@ const validateEmail = (value) => {
 };
 
 const Login = ({ history, loading, error, loginUserAction, setUserLoggued }) => {
-  const [email] = useState('test@legendary.com');
-  const [password] = useState('TestPassword');
+  const [email, setEmail] = useState('test@legendary.com');
+  const [password, setPassword] = useState('TestPassword');
 
   useEffect(() => {
     if (error) {
@@ -78,10 +78,12 @@ const Login = ({ history, loading, error, loginUserAction, setUserLoggued }) => 
 								<Label>
 								<IntlMessages id="user.email" />  
 								</Label>
-								<Field
+								<Input
 								className="form-control"
 								name="email"
+								defaultValue={email}
 								validate={validateEmail}
+								onChange={({target})=> setEmail(target.value)}
 								/>
 								{errors.email && touched.email && (
 								<div className="invalid-feedback d-block">
@@ -89,15 +91,18 @@ const Login = ({ history, loading, error, loginUserAction, setUserLoggued }) => 
 								</div>
 								)}
 							</FormGroup>
-							<FormGroup className="form-group has-float-label">
+		 					<FormGroup className="form-group has-float-label">
 								<Label>
 									<IntlMessages id="user.password" />
 								</Label>
-								<Field
+								<Input
 									className="form-control"
 									type="password"
+									defaultValue={password}
+
 									name="password"
 									validate={validatePassword}
+									onChange={({target})=> setPassword(target.value)}
 								/>
 								{errors.password && touched.password && (
 								<div className="invalid-feedback d-block">

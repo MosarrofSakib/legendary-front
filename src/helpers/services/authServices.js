@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const URL = "http://54.183.246.192:9000/api/v1/users";
+const URL = `http://${process.env.URL}/api/v1/users`;
 
 async function loginService(email, password) {
     try{
@@ -8,7 +8,7 @@ async function loginService(email, password) {
             method: "POST",
             url: `${URL}/login`,
             auth: {
-                email, 
+                username: email, 
                 password
             }
         })

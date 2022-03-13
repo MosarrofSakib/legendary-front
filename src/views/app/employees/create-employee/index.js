@@ -27,6 +27,10 @@ const EmployeesForm = ({ setEmployees, employees }) => {
     const [dateOfHiring, setDateOfHiring] = useState("");
     const [healtInsurance, setHealtInsurance] = useState("");
     const [experienceInCompanies, setExperienceInCompanies] = useState([]);
+    const [dependensMinors, setDependensMinors] = useState(0);
+    const [dependensMayors, setDependensMayors] = useState(0);
+    const [emergency_contact_name, setEmergencyContactName] = useState("");
+    const [emergency_contact_phone, setEmergencyContactPhone] = useState("");
     const [sendData, setSendData] = useState(false);
     const [startDate, setStartDate] = useState(new Date());
     const [idExperience,setIdExperience] = useState(0);
@@ -117,29 +121,30 @@ const EmployeesForm = ({ setEmployees, employees }) => {
     }
 
     const saveEmployee = () => {
-        const oldEmployees = [...employees]
         const newEmployee = {
-            name,
-            lastname,
-            email,
-            phone,
-            address,
-            role,
-            skillLevel,
+            name_employee: name,
+            lastname_employee: lastname,
+            email_employee: email,
+            phone_employee: phone,
+            address_employee: address,
+            role_employee: role,
+            skill_level: skillLevel,
             experience,
-            ssn,
-            city,
-            zipCode,
-            perHourCharges,
-            martialStatus,
+            ssn_employee: ssn,
+            city_employee: city,
+            zip_code: zipCode,
+            per_hour_charge: perHourCharges,
+            martial_status: martialStatus,
             gender,
-            dateBirth,
+            date_of_birth: dateBirth,
+            dependensMinors,
+            dependensMayors,
             englishLevel,
             dateOfHiring,
-            healtInsurance
+            healtInsurance,
+            emergency_contact_name,
+            emergency_contact_phone,
         }
-        oldEmployees.push(newEmployee);
-        setEmployees(oldEmployees);
     }
     const formOne = (
         <>
