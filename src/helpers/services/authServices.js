@@ -1,6 +1,6 @@
 import axios from 'axios';
 import URLSERVICES from "./urlServices";
-const URL = `https://${URLSERVICES}/api/v1/users`;
+const URL = `http://${URLSERVICES}/api/v1/users`;
 
 async function loginService(email, password) {
     try{
