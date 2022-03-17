@@ -1,4 +1,5 @@
 {
+  "homepage":"https://yahirkeym.github.io/legendary-front/",
   "name": "gogo-react",
   "version": "5.3.1",
   "description": "Gogo - React Bootstrap 4 Admin Dashboard Template",
@@ -12,7 +13,6 @@
     "axios": "^0.21.4",
     "chart.js": "2.9.4",
     "classnames": "2.3.1",
-    "firebase": "^8.6.5",
     "formik": "^2.2.9",
     "moment": "2.29.1",
     "mousetrap": "^1.6.5",
@@ -58,6 +58,8 @@
     "yup": "^0.32.9"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -79,5 +81,8 @@
       "last 1 safari version",
       "ie 11"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^3.2.3"
   }
 }
