@@ -3,7 +3,7 @@ import { Row, InputGroup, Input, Button} from 'reactstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 
-function TrFormCompanies({changeStep}){
+function TrFormCompanies({changeStep, saveCompanie}){
     return(
         <Row>
             <Colxx xxs="12" className="mb-4">
@@ -28,7 +28,7 @@ function TrFormCompanies({changeStep}){
                 <Button color="danger" className="mb-2" onClick={()=>changeStep(1)}>
                         <IntlMessages id="Back" />
                     </Button>
-                    <Button color="success" className="mb-2">
+                    <Button color="success" className="mb-2" onClick={saveCompanie}>
                         <IntlMessages id="Save" />
                     </Button>
                 </Colxx>

@@ -18,7 +18,7 @@ const validateEmail = (value) => {
     return error;
   };
 
-const EmployeesForm = ({ setEmployees, employees }) => {
+const EmployeesForm = ({ getEmployees }) => {
     const [name, setName] = useState("");
     const [lastname, setLastname] = useState("");
     const [email, setEmail] = useState("");
@@ -196,6 +196,7 @@ const EmployeesForm = ({ setEmployees, employees }) => {
             organizations: [],
         }
         const response = await addEmployee(newEmployee);
+        await getEmployees();
     }
     let validateDisabledRoles = role === "all" ? true : false;
     const disabledRoles = {

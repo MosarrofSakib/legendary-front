@@ -1,6 +1,6 @@
 import axios from 'axios';
-
-const URL = `http://localhost:9000/api/v1/employees`;
+import URLSERVICE from "./urlServices";
+const URL = `http://${URLSERVICE}/api/v1/employees`;
 
 export const addEmployee = async (dataEvent) => {
     try{
@@ -33,8 +33,13 @@ export const getOneEmployee = async () => {
 
 export const getAllEmployees = async () => {
     try{
-
+        const data = await axios({
+            method: "GET",
+            url: `${URL}/view/all`,
+        });
+        return data.data;
     }catch(err){
-
+        console.log("ERR CALL API => ",err);
+        return false;
     }
 }

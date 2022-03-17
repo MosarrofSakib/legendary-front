@@ -6,8 +6,20 @@ import SecondFormCompanies from './SecondFormCompanies';
 import TrFormCompanies from './TrFormCompanies';
 import { Steps } from 'rsuite';
 import "react-datepicker/dist/react-datepicker.css";
+import { addCompanie } from 'helpers/services/companyServices';
 
-const CreateCompanie = ({ match }) => {
+const validateEmail = (value) => {
+    let error;
+    if (!value) {
+      error = 'Please enter your email address';
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
+      error = 'Invalid email address';
+    }
+    return error;
+  };
+
+
+const CreateCompanie = ({ match, getCompanies }) => {
     const [nameCompanie, setNameCompanie] = useState("");
     const [emailCompanie, setEmailCompanie] = useState("");
     const [phoneCompanie, setPhoneCompanie] = useState("");
@@ -27,11 +39,30 @@ const CreateCompanie = ({ match }) => {
     const [apartmentContactPhone, setApartmentContactPhone] = useState("");
     const [apartmentContactEmail, setApartmentContactEmail] = useState("");
     const [perHourCharges, setPerHourCharges] = useState([]);
+    const [errors, setErrors] = useState({
+        emailCompanie: "",
+        emailBussinessContact: "",
+        emailApartmentContact: "",
+    });
 
     const saveData = (dataValue, type) => {
         const typeData = {
             nameCompanie: value => setNameCompanie(value),
-            emailCompanie: value => setEmailCompanie(value),
+            emailCompanie: value => {
+                setEmailCompanie(value)
+                const validation = validateEmail(value);
+                if(validation) {
+                    setErrors({
+                        ...errors,
+                        emailCompanie: validation,
+                    })
+                } else {
+                    setErrors({
+                        ...errors,
+                        emailCompanie: "",
+                    })
+                }
+            },
             phoneCompanie: value => setPhoneCompanie(value),
             address: value => setAddress(value),
             state: value => setState(value),
@@ -41,13 +72,41 @@ const CreateCompanie = ({ match }) => {
             title: value => setTitle(value),
             bussinessContactName: value => setBussinessContactName(value),
             bussinessContactPhone: value=> setBussinessContactPhone(value),
-            bussinessContactEmail: value => setBussinessContactEmail(value),
+            bussinessContactEmail: value => {
+                setBussinessContactEmail(value);
+                const validation = validateEmail(value);
+                if(validation) {
+                    setErrors({
+                        ...errors,
+                        emailBussinessContact: validation,
+                    })
+                } else {
+                    setErrors({
+                        ...errors,
+                        emailBussinessContact: "",
+                    })
+                }
+            },
             apartmentName: value => setApartmentName(value),
             apartmentCategory: value => setApartmentCategory(value),
             apartmentAddress: value => setApartmentAddress(value),
             apartmentContactName: value => setApartmentContactName(value),
             apartmentContactPhone: value => setApartmentContactPhone(value),
-            apartmentContactEmail: value => setApartmentContactEmail(value),
+            apartmentContactEmail: value => {
+                setApartmentContactEmail(value)
+                const validation = validateEmail(value);
+                if(validation) {
+                    setErrors({
+                        ...errors,
+                        emailApartmentContact: validation,
+                    })
+                } else {
+                    setErrors({
+                        ...errors,
+                        emailApartmentContact: "",
+                    })
+                }
+            },
 
         }
         typeData[type](dataValue);
@@ -59,6 +118,46 @@ const CreateCompanie = ({ match }) => {
         setStep(stepNumber);
     }
 
+    const normalizeData = () => {
+        const dataNormalized = {
+            name: nameCompanie,
+            email: emailCompanie,
+            phone: phoneCompanie,
+            state: state,
+            pincode: pinCode,
+            city,
+            address,
+            category,
+            title,
+            contacts: [
+                {
+                    name: bussinessContactName,
+                    phone: bussinessContactPhone,
+                    email: bussinessContactEmail,
+                }
+            ],
+            apartments: [
+                {
+                        
+                    name: apartmentName,
+                    category: apartmentCategory,
+                    site: apartmentAddress,
+                    contact: {
+                        name: apartmentContactName,
+                        phone: apartmentContactPhone,
+                        email: apartmentContactEmail
+                    }
+                }
+            ]
+        };
+        return dataNormalized;
+    }
+
+    const saveCompanie = async () => {
+        const data = normalizeData();
+        const response = await addCompanie(data);
+        await getCompanies();
+    }
   return (
     <>
         <Row>
@@ -72,13 +171,18 @@ const CreateCompanie = ({ match }) => {
             </Colxx>
         </Row>
         {step === 0 && (
-            <FirstFormCompanies changeStep={changeStep} saveData={saveData}/>
+            <FirstFormCompanies changeStep={changeStep} saveData={saveData} errors={errors} {...normalizeData()}/>
         )}
         {step === 1 && (
-            <SecondFormCompanies changeStep={changeStep} saveData={saveData}/>
+            <SecondFormCompanies changeStep={changeStep} saveData={saveData} errors={errors} {...normalizeData()}/>
         )}
         {step === 2 && (
-            <TrFormCompanies changeStep={changeStep} saveData={saveData}/>
+            <TrFormCompanies 
+                changeStep={changeStep} 
+                saveData={saveData} 
+                saveCompanie={saveCompanie} 
+                errors={errors}
+                {...normalizeData()}/>
         )}
     </>
   );

@@ -1,6 +1,6 @@
 import axios from 'axios';
-
-const URL = `http://localhost:9000/api/v1/companies`;
+import URLSERVICE from "./urlServices";
+const URL = `http://${URLSERVICE}/api/v1/companies`;
 
 export const addCompanie = async (dataEvent) => {
     try{
@@ -33,7 +33,11 @@ export const getOneCompanie = async () => {
 
 export const getAllCompanies = async () => {
     try{
-
+        const data = await axios({
+            method: "GET",
+            url: `${URL}/view/all`
+        });
+        return data.data;
     }catch(err){
 
     }

@@ -1,10 +1,13 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { Row, Table,Button, Modal, ModalBody} from 'reactstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import Breadcrumb from 'containers/navs/Breadcrumb';
 import CreateCompanie from "../create-companie";
+import ShortCompaniesInfo from './shortInformation';
+import { getAllCompanies } from 'helpers/services/companyServices';
 const ViewComapanies = ({ match }) => {
+	const [companies, setCompanies] = useState([]);
     const [modal, setModal] = useState(false);
 	const sendToDetails = () => {
 		window.location.href = "/app/employees/details"
@@ -12,6 +15,21 @@ const ViewComapanies = ({ match }) => {
 	const sendToEditEmployee = ()=>{
 		window.location.href = "/app/employees/edit";
 	}
+
+	const getCompanies = async () => {
+		try {
+			const companies = await getAllCompanies();
+			if(companies) {
+				setCompanies(companies.data);
+			}
+		} catch (err) {
+			console.log("ERR GET COMPANIES => ", err);
+		}
+	}
+
+	useEffect(()=>{
+		(async () => await getCompanies())()
+	},[])
   return (
 
     <>
@@ -36,7 +54,7 @@ const ViewComapanies = ({ match }) => {
             toggle={() => setModal(!modal)}
         >
                 <ModalBody>
-                    <CreateCompanie />
+                    <CreateCompanie getCompanies={getCompanies}/>
                 </ModalBody>
         </Modal>
       <Row>
@@ -55,23 +73,7 @@ const ViewComapanies = ({ match }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Test companie</td>
-                    <td>HOF</td>
-                    <td>EU</td>
-                    <td>California</td>
-                    <td>030303</td>
-                    <td>559393938</td>
-                    <td>
-                        <Button color="success" className="mb-2" onClick={sendToDetails}>
-                            <IntlMessages id="View Details" />
-                        </Button>
-                        <Button color="success" className="mb-2" onClick={sendToEditEmployee}>
-                            <IntlMessages id="Edit" />
-                        </Button>
-                    </td>
-                  </tr>
+					{companies.map((data) => <ShortCompaniesInfo {...data} />)}
                 </tbody>
               </Table>
         </Colxx>
