@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-const URL = `http://localhost:9000/api/v1/employees`;
+const URL = `http://localhost:9000/api/v1/companies`;
 
-export const addEmployee = async (dataEvent) => {
+export const addCompanie = async (dataEvent) => {
     try{
         const data = await axios({
             method: "POST",
@@ -15,7 +15,7 @@ export const addEmployee = async (dataEvent) => {
     }
 }
 
-export const editEmployee = async () => {
+export const editCompanie = async () => {
     try{
 
     }catch(err){
@@ -23,7 +23,7 @@ export const editEmployee = async () => {
     }
 }
 
-export const getOneEmployee = async () => {
+export const getOneCompanie = async () => {
     try{
 
     }catch(err){
@@ -31,7 +31,7 @@ export const getOneEmployee = async () => {
     }
 }
 
-export const getAllEmployees = async () => {
+export const getAllCompanies = async () => {
     try{
 
     }catch(err){

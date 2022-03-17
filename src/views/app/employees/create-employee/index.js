@@ -8,6 +8,16 @@ import FormExperience from './formExperience';
 import "react-datepicker/dist/react-datepicker.css";
 import { addEmployee } from 'helpers/services/employeesServices';
 
+const validateEmail = (value) => {
+    let error;
+    if (!value) {
+      error = 'Please enter your email address';
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
+      error = 'Invalid email address';
+    }
+    return error;
+  };
+
 const EmployeesForm = ({ setEmployees, employees }) => {
     const [name, setName] = useState("");
     const [lastname, setLastname] = useState("");
@@ -23,9 +33,10 @@ const EmployeesForm = ({ setEmployees, employees }) => {
     const [perHourCharges, setPerHourCharges] = useState("");
     const [martialStatus, setMartialStatus] = useState("");
     const [gender, setGender] = useState("");
-    const [dateBirth, setDateBirth] = useState("");
+    const [haveADependents, setHaveADependents] = useState(false);
+    const [dateBirth, setDateBirth] = useState(new Date());
     const [englishLevel, setEnglishLevel] = useState("");
-    const [dateOfHiring, setDateOfHiring] = useState("");
+    const [dateOfHiring, setDateOfHiring] = useState(new Date());
     const [healtInsurance, setHealtInsurance] = useState("");
     const [experienceInCompanies, setExperienceInCompanies] = useState([]);
     const [dependensMinors, setDependensMinors] = useState(0);
@@ -33,19 +44,40 @@ const EmployeesForm = ({ setEmployees, employees }) => {
     const [emergency_contact_name, setEmergencyContactName] = useState("");
     const [emergency_contact_phone, setEmergencyContactPhone] = useState("");
     const [sendData, setSendData] = useState(false);
-    const [startDate, setStartDate] = useState(new Date());
     const [idExperience,setIdExperience] = useState(0);
     const [step, setStep] = useState(0);
+    const [validationOfEmail, setValidationOfEmail] = useState(undefined);
+    const [errors, setErros] = useState({
+        email: ""
+    });
+    const [responseSave, setResponseSave] = useState("");
 
-    const changeStep = ()=>{
-        setStep(1);
+    const changeStep = (type)=>{
+        if(type === "back"){
+            setStep(0);
+        } else {
+            setStep(1);
+        }
     }
 
     const saveData = (dataValue, type) => {
         const options = {
             name: (value) => setName(value),
             lastname: (value) => setLastname(value),
-            email: (value) => setEmail(value),
+            email: (value) => {
+                setEmail(value);
+                const validation = validateEmail(value);
+                if(validation) {
+                    setValidationOfEmail(false);
+                    setErros({
+                        ...errors,
+                        email: validation,
+                    })
+                } else {
+                    setValidationOfEmail(true);
+                }
+
+            },
             phone: (value) => setPhone(value),
             address: (value) => setAddress(value),
             role: (value) => setRole(value),
@@ -60,7 +92,12 @@ const EmployeesForm = ({ setEmployees, employees }) => {
             dateBirth: value => setDateBirth(value),
             englishLevel: value => setEnglishLevel(value),
             dateOfHiring: value => setDateOfHiring(value),
-            healtInsurance: value => setHealtInsurance(value),
+            healthInsurance: value => setHealtInsurance(value),
+            dependensMinors: value => setDependensMinors(value),
+            dependensMayors: value => setDependensMayors(value),
+            emergencyContactName: value => setEmergencyContactName(value),
+            emergencyContactPhone: value => setEmergencyContactPhone(value),
+            haveADependents: value => setHaveADependents(value),
             sendData: () => setSendData(true),
         };
         options[type](dataValue);
@@ -121,6 +158,13 @@ const EmployeesForm = ({ setEmployees, employees }) => {
         setExperienceInCompanies(newExperiences);
     }
 
+    const normalizeDate = (date) => {
+        const getDate = new Date(date);
+        const getDay = getDate.getDate();
+        const getMonth = getDate.getMonth();
+        const getYear = getDate.getFullYear();
+        return `${getYear}-${getMonth}-${getDay}`;
+    }
     const saveEmployee = async () => {
         const newEmployee = {
             data: {
@@ -139,18 +183,29 @@ const EmployeesForm = ({ setEmployees, employees }) => {
                 per_hour_charge: perHourCharges,
                 martial_status: martialStatus,
                 gender,
-                date_of_birth: dateBirth,
+                date_of_birth: normalizeDate(dateBirth),
                 dependensMinors,
                 dependensMayors,
                 englishLevel,
-                dateOfHiring,
+                dateOfHiring: normalizeDate(dateOfHiring),
                 healtInsurance,
                 emergency_contact_name,
                 emergency_contact_phone,
+                haveDependents: haveADependents
             },
             organizations: [],
         }
-        await addEmployee(newEmployee);
+        const response = await addEmployee(newEmployee);
+    }
+    let validateDisabledRoles = role === "all" ? true : false;
+    const disabledRoles = {
+        disabled: validateDisabledRoles
+    }
+    const checkedRole = {
+        checked : validateDisabledRoles,
+    }
+    const checkedDependents = {
+        checked: haveADependents
     }
     const formOne = (
         <>
@@ -162,28 +217,63 @@ const EmployeesForm = ({ setEmployees, employees }) => {
             <Row>
                 <Colxx xxs="12" xl="6" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="Employee Name" onChange={({target}) => saveData(target.value, "name")} />
+                        <Row>
+                            <Colxx xxs="12">
+                                Employee Name
+                            </Colxx>
+                            <Colxx xxs="12">
+                                <Input defaultValue={name} onChange={({target}) => saveData(target.value, "name")} />
+                            </Colxx>
+                        </Row>
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="Employee lastname" onChange={({target}) => saveData(target.value, "lastname")} />
+                        <Row>
+                            <Colxx xxs="12">
+                                Employee lastname
+                            </Colxx>
+                            <Colxx xxs="12">
+                                <Input defaultValue={name} onChange={({target}) => saveData(target.value, "lastname")} />
+                            </Colxx>
+                        </Row>
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="Email Address" onChange={({target}) => saveData(target.value, "email")}/>
+                        <Row>
+                            <Colxx xxs="12">
+                                Email Address
+                            </Colxx>
+                            <Colxx xxs="12">
+                                <Input defaultValue={name} onChange={({target}) => saveData(target.value, "email")} />
+                            </Colxx>
+                        </Row>
+                        {validationOfEmail === false && (
+								<div className="invalid-feedback d-block">
+									{errors.email}
+								</div>
+                        )}
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input type="checkbox" aria-label="Select all roles" onChange={({target}) => saveData("all", "role")}/>
+                        <Input type="checkbox" {...checkedRole} aria-label="Select all roles" onChange={({target}) => {
+                            if (target.checked) {
+                                saveData("all", "role")
+                                saveData("Skilled", "skillLevel");
+                            } else {
+                                saveData("","role");
+                                saveData("", "skillLevel");
+                            }
+                        }
+                            }/>
                         Select all roles
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input type="select" placeholder="Companies Selection" onChange={({target}) => saveData(target.value, "role")}>
+                        <Input type="select" placeholder="Companies Selection" onChange={({target}) => {saveData(target.value, "role")}} {...disabledRoles}>
                             <option value="">Select Role</option>
                             <option>Administrative</option>
                             <option>Chieff</option>
@@ -193,7 +283,7 @@ const EmployeesForm = ({ setEmployees, employees }) => {
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input type="select" placeholder="Companies Selection" onChange={({target}) => saveData(target.value, "skillLevel")}>
+                        <Input type="select" placeholder="Companies Selection" onChange={({target}) => saveData(target.value, "skillLevel")} {...disabledRoles} >
                             <option value="">Skill level</option>
                             <option>Beginner</option>
                             <option>Pro</option>
@@ -203,74 +293,150 @@ const EmployeesForm = ({ setEmployees, employees }) => {
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="Experience" onChange={({target}) => saveData(target.value, "experience")}/>
+                        <Input placeholder="Experience" defaultValue={experience} onChange={({target}) => saveData(target.value, "experience")}/>
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="Phone" onChange={({target}) => saveData(target.value, "phone")}/>
+                        <Input placeholder="Phone" defaultValue={phone} onChange={({target}) => saveData(target.value, "phone")} type="number" />
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="12" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="Address" onChange={({target}) => saveData(target.value, "address")}/>
+                        <Input placeholder="Address" defaultValue={address} onChange={({target}) => saveData(target.value, "address")}/>
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="SSN No." onChange={({target}) => saveData(target.value, "ssn")}/>
+                        <Input placeholder="SSN No." defaultValue={ssn} onChange={({target}) => saveData(target.value, "ssn")} type="number"/>
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="City/Location" onChange={({target}) => saveData(target.value, "city")}/>
+                        <Input placeholder="City/Location" defaultValue={city} onChange={({target}) => saveData(target.value, "city")}/>
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="Zip Code" onChange={({target}) => saveData(target.value, "zipCode")}/>
+                        <Input placeholder="Zip Code" defaultValue={zipCode} onChange={({target}) => saveData(target.value, "zipCode")} type="number"/>
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="Per Hour Charges" onChange={({target}) => saveData(target.value,"perHourCharges")}/>
+                        <Input placeholder="Per Hour Charges" defaultValue={perHourCharges} onChange={({target}) => saveData(target.value,"perHourCharges")} type="number"/>
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
-                        Martial Status
-                    <InputGroup size="sm" className="mb-3">
-                        <Input type="radio" aria-label="Single" onChange={() => saveData("single","martialStatus")}/>
-                        Single
-                    </InputGroup>
-                    <InputGroup size="sm" className="mb-3">
-                        <Input type="radio" aria-label="Married" onChange={() => saveData("married","lastname")}/>
-                        Married
+                    <InputGroup size="sm" className='mb-3'>
+                        <Row>
+                            <Colxx xxs="12">
+                                Martial Status
+                            </Colxx>
+                            <Colxx xxs="6">
+                                <InputGroup size="sm" className="mb-3">
+                                    <Input type="radio" aria-label="Single" onChange={() => saveData("single","martialStatus")}/>
+                                    Single
+                                </InputGroup>
+                            </Colxx>
+                            <Colxx xxs="6">
+                                <InputGroup size="sm" className="mb-3">
+                                    <Input type="radio" aria-label="Married" onChange={() => saveData("married","lastname")}/>
+                                    Married
+                                </InputGroup>
+                            </Colxx>
+                        </Row>
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
-                        Gender
-                    <InputGroup size="sm" className="mb-3">
-                        <Input type="radio" aria-label="Female" onChange={() => saveData("female","gender")}/>
-                        Female
-                    </InputGroup>
-                    <InputGroup size="sm" className="mb-3">
-                        <Input type="radio" aria-label="Male" onChange={() => saveData("male","gender")}/>
-                        Male
-                    </InputGroup>
-                    <InputGroup size="sm" className="mb-3">
-                        <Input type="radio" aria-label="Other" onChange={() => saveData("other","gender")}/>
-                        Other
+                    <InputGroup size="sm" className="mb-3"> 
+                            <Row>
+                                <Colxx xxs="12">
+                                    Gender
+                                </Colxx>
+                                <Colxx xxs="4">
+                                    <InputGroup size="sm" className="mb-3">
+                                        <Input type="radio" aria-label="Female" onChange={() => saveData("female","gender")}/>
+                                        Female
+                                    </InputGroup>
+                                </Colxx>
+                                <Colxx xxs="4">
+                                    <InputGroup size="sm" className="mb-3">
+                                        <Input type="radio" aria-label="Male" onChange={() => saveData("male","gender")}/>
+                                        Male
+                                    </InputGroup>
+                                </Colxx>
+                                <Colxx xxs="4">
+                                    <InputGroup size="sm" className="mb-3">
+                                        <Input type="radio" aria-label="Other" onChange={() => saveData("other","gender")}/>
+                                        Other
+                                    </InputGroup>   
+                                </Colxx>
+                            </Row>
                     </InputGroup>
                 </Colxx>
+                <Colxx xxs="12" className="mb-4">
+                    <InputGroup size="sm" className="mb-3">
+                        <Input type="checkbox" {...checkedDependents} aria-label="Do you have dependents?" onChange={({target}) => {
+                            if (target.checked) {
+                                saveData(true, "haveADependents")
+                            } else {
+                                saveData(false,"haveADependents");
+                            }
+                        }
+                            }/>
+                        Do you have dependents?
+                    </InputGroup>
+                </Colxx>
+                { haveADependents && (
+                    <>
+                        <Colxx xxs="12" xl="6" className="mb-4">
+                            <InputGroup size="sm" className="mb">
+                                <Row>
+                                    <Colxx xxs="12">
+                                        Dependents Minors
+                                    </Colxx>
+                                    <Colxx xxs="12">
+                                        <Input type="number" onChange={({target})=> saveData(target.value, "dependensMinors")} />
+                                    </Colxx>
+                                </Row>
+                            </InputGroup>
+                        </Colxx>
+                        <Colxx xxs="12" xl="6" className="mb-4">
+                            <InputGroup size="sm" className="mb">
+                                <Row>
+                                    <Colxx xxs="12">
+                                        Dependents Mayors
+                                    </Colxx>
+                                    <Colxx xxs="12">
+                                        <Input type="number" onChange={({target})=> saveData(target.value, "dependensMayors")} />
+                                    </Colxx>
+                                </Row>
+                            </InputGroup>
+                        </Colxx>
+                    </>
+                )}
                 <Colxx xxs="12" xl="6" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
                         Date of birth: 
-                        <DatePicker selected={startDate} onChange={(date) => saveData(date,"dateBirth")} />
+                        <DatePicker selected={dateBirth} onChange={(date) => saveData(date,"dateBirth")} />
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="English Level" onChange={({target}) => saveData(target.value,"englishLevel")}/>
+                        Date of Hiring:
+                        <DatePicker selected={dateOfHiring} onChange={(date) => saveData(date,"dateOfHiring")} />
+                    </InputGroup>
+                </Colxx>
+                <Colxx xxs="12" xl="12" className="mb-4">
+                    <InputGroup size="sm" className="mb-3">
+                        <Row>
+                            <Colxx xxs="12">
+                                English Level
+                            </Colxx>
+                            <Colxx xxs="12">
+                                <Input onChange={({target}) => saveData(target.value,"englishLevel")}/>
+                            </Colxx>
+                        </Row>
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
@@ -281,12 +447,6 @@ const EmployeesForm = ({ setEmployees, employees }) => {
                         id="exampleCustomFileBrowser1"
                         name="customFile"
                         />
-                    </InputGroup>
-                </Colxx>
-                <Colxx xxs="12" xl="6" className="mb-4">
-                    <InputGroup size="sm" className="mb-3">
-                        Date of Hiring:
-                        <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
@@ -301,12 +461,43 @@ const EmployeesForm = ({ setEmployees, employees }) => {
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="Healt Insurance"/>
+                        <Row>
+                            <Colxx xxs="12">
+                                Health Insurance
+                            </Colxx>
+                            <Colxx xxs="12">
+                                <Input onChange={({target})=> saveData(target.value,"healthInsurance")}/>
+                            </Colxx>
+                        </Row>
+                    </InputGroup>
+                </Colxx>
+                <Colxx xxs="12" xl="6" className="mb-4">
+                    <InputGroup size="sm" className="mb">
+                        <Row>
+                            <Colxx xxs="12">
+                                Emergency Contact Name
+                            </Colxx>
+                            <Colxx xxs="12">
+                                <Input type="number" onChange={({target})=> saveData(target.value, "emergencyContactName")} />
+                            </Colxx>
+                        </Row>
+                    </InputGroup>
+                </Colxx>
+                <Colxx xxs="12" xl="6" className="mb-4">
+                    <InputGroup size="sm" className="mb">
+                        <Row>
+                            <Colxx xxs="12">
+                                Emergency Contact Phone
+                            </Colxx>
+                            <Colxx xxs="12">
+                                <Input type="number" onChange={({target})=> saveData(target.value, "emergencyContactPhone")} />
+                            </Colxx>
+                        </Row>
                     </InputGroup>
                 </Colxx>
             </Row>
             <Colxx xxs="12" xl="6" className="mb-4">
-                <Button color="success" className="mb-2" onClick={changeStep}>
+                <Button color="success" className="mb-2" onClick={()=>changeStep("next")}>
                     <IntlMessages id="button.success"/>
                 </Button>
             </Colxx>
@@ -333,10 +524,18 @@ const EmployeesForm = ({ setEmployees, employees }) => {
                         />
                     </InputGroup>
                 </Colxx>
-                <Colxx xxs="12" className="mb-4">    
+                <Colxx xxs="12" className="mb-4">  
+                    <Button color="danger" className="mb-2" onClick={()=>changeStep("back")}>
+                        <IntlMessages id="Back"/>
+                    </Button>  
                     <Button color="success" className="mb-2" onClick={saveEmployee}>
                         <IntlMessages id="Guardar"/>
                     </Button>
+                </Colxx>
+                <Colxx xxs="12" className="mb4">
+                    <div>
+                        
+                    </div>
                 </Colxx>
             </Row>
     )

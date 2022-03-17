@@ -101,6 +101,9 @@ function SecondFormCompanies({changeStep, saveData}){
                     </Colxx>
                 </Row>
                 <Colxx xxs="12" xl="6" className="mb-4">
+                    <Button color="danger" className="mb-2" onClick={()=>changeStep(0)}>
+                        <IntlMessages id="Back" />
+                    </Button>
                     <Button color="success" className="mb-2" onClick={()=>changeStep(2)}>
                         <IntlMessages id="Next" />
                     </Button>

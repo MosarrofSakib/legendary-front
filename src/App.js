@@ -37,7 +37,7 @@ const ViewUnauthorized = React.lazy(() =>
 );
 
 const App = ({ locale }) => {
-  const [userLoggued, setUserLoggued] = useState(false);
+  const [userLoggued, setUserLoggued] = useState(undefined);
   const direction = getDirection();
   const currentAppLocale = AppLocale[locale];
   useEffect(() => {
@@ -59,6 +59,8 @@ const App = ({ locale }) => {
 	if (cookie) {
 		setUserLoggued(true);
 		// window.location = "/app/dashboards/default"
+	} else {
+		setUserLoggued(false);
 	}
   },[])
 //   adminRoot = userLoggued ? adminRoot :ç "/login";
@@ -71,7 +73,12 @@ const App = ({ locale }) => {
 			<>
 			<NotificationContainer />
 			<Suspense fallback={<div className="loading" />}>
-				{!userLoggued && 
+				{userLoggued === undefined && (
+					<div>
+						Loading...
+					</div>
+				)}
+				{userLoggued === false && 
 					<Router>
 						<Switch>
 							<Route
