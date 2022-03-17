@@ -39,6 +39,42 @@ export const getAllCompanies = async () => {
         });
         return data.data;
     }catch(err){
+        console.log("ERR CALL GET ALL COMPANIES => ", err);
+    }
+}
 
+export const getApartments = async (idCompanie) => {
+    try {
+        const data = await axios({
+            method: "GET",
+            url: `${URL}/get/aparments?idCompanie=${idCompanie}`
+        });
+        return data.data;
+    } catch (err) {
+        console.log("ERR CALL APARTMENTS => ", err);
+    }
+}
+
+export const getContactsCompanie = async (idCompanie) => {
+    try { 
+        const data = await axios({
+            method: "GET",
+            url: `${URL}/get/contacts?type=companie&id=${idCompanie}`
+        })
+        return data.data
+    } catch (err) {
+        console.log("ERR CALL GET CONTACTS FOR COMPANIE => ", err);
+    }
+}
+
+export const getContactApartment = async (idApartment) => {
+    try {
+        const data = await axios({
+            method: "GET",
+            url: `${URL}/get/contacts?type=apartment&id=${idApartment}`
+        })
+        return data.data
+    } catch (err) {
+        console.log("ERR CALL GET CONTACTS FOR APARTMENT => ", err);
     }
 }

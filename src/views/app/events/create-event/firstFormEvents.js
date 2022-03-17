@@ -3,7 +3,8 @@ import { Row, InputGroup, Input, Button} from 'reactstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 
-function FirstFormEvents({changeStep}){
+function FirstFormEvents(props){
+    const { changeStep, companies, saveData, apartments } = props;
     return (
         <Row>
         <Colxx xxs="12" xl="12" className="mb-4">
@@ -11,26 +12,34 @@ function FirstFormEvents({changeStep}){
             
                 <Colxx xxs="12" xl="6" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input type="select" placeholder="Companies Selection">
+                        <Input type="select" placeholder="Companies Selection" onChange={({target}) => saveData(target.value,"idCompanie")}>
                             <option value="">Select Companie</option>
-                            <option>LG</option>
-                            <option>Apple</option>
-                            <option>Microsoft</option>
+                            {companies.map(data => <option value={data.id_companie}>{data.name_companie}</option>)}
                         </Input>
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="Name of the event"/>
+                        <Input placeholder="Name of the event" onChange={({target}) => saveData(target.value,"nameEvent")}/>
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input type="select" placeholder="Department selection">
+                        <Input type="select" placeholder="Department selection" onChange={({target}) => saveData(target.value,"idApartment")}>
                             <option value="">Select Department</option>
-                            <option>Admin</option>
-                            <option>Systems</option>
+                            {apartments.map((data)=> <option value={data.id_apartment}>{data.name_apartment}</option>)}
                         </Input>
+                    </InputGroup>
+                </Colxx>
+                <Colxx xxs="12" xl="6" className="mb-4">
+                    <InputGroup size="sm" className="mb-3">
+                        <Input type="checkbox" aria-label="Exist BEO number?" onChange={({target}) => {
+                            if (target.checked) {
+                            } else {
+                            }
+                        }
+                            }/>
+                        Exist BEO number?
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="12" className="mb-4">
