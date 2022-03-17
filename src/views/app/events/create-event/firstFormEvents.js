@@ -35,7 +35,9 @@ function FirstFormEvents(props){
                     <InputGroup size="sm" className="mb-3">
                         <Input type="checkbox" aria-label="Exist BEO number?" onChange={({target}) => {
                             if (target.checked) {
+                                saveData(true,"beoNumber");
                             } else {
+                                saveData(false,"beoNumber");
                             }
                         }
                             }/>
@@ -44,12 +46,12 @@ function FirstFormEvents(props){
                 </Colxx>
                 <Colxx xxs="12" xl="12" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="Beo Number"/>
+                        <Input placeholder="Beo Number" onChange={({target}) => saveData(target.value,"beoNumber")}/>
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">
                     <InputGroup size="sm" className="mb-3">
-                        <Input placeholder="Contact Name"/>
+                        <Input placeholder="Contact Name" onChange={({target}) => saveData(target.value,"idApartment")}/>
                     </InputGroup>
                 </Colxx>
                 <Colxx xxs="12" xl="6" className="mb-4">

@@ -76,7 +76,7 @@ const CreateEvent = ({ match }) => {
 				callApartmentsForCompanie(value);
 			},
 			nameEvent: value => setNameOfEvent(value),
-			idDepartment: value => {
+			idApartment: value => {
 				setIdDepartment(value);
 				callContactsForApartment(value);
 			},
@@ -90,6 +90,12 @@ const CreateEvent = ({ match }) => {
 			HowEnterLocation: value => setHowEnterLocation(value),
 		};
 		selectOption[type](dataValue);
+	}
+	
+	const normalizeData = () => {
+		const data = {
+			
+		}
 	}
 	useEffect(()=>{
 		(async () => {
@@ -111,7 +117,12 @@ const CreateEvent = ({ match }) => {
 			</Colxx>
 		</Row>
 		{step === 0 && (
-			<FirstFormEvents changeStep={changeStep} companies={companies} saveData={saveData} />
+			<FirstFormEvents 
+				changeStep={changeStep} 
+				companies={companies} 
+				saveData={saveData} 
+				apartments={apartments} 
+				contacts={contacts} />
 		)}
 		{step === 1 && (
 			<SecondFormEvents />
