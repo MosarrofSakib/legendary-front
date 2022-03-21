@@ -2,4 +2,4 @@
 [build]
 base = "/"
 publish = "build/"
-command = "CI=yarn add firebase/app"
+command = "CI=npm run build"
