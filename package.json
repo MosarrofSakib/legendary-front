@@ -55,7 +55,8 @@
     "sortablejs": "^1.13.0",
     "video.js": "^7.12.3",
     "web-vitals": "^2.0.1",
-    "yup": "^0.32.9"
+    "yup": "^0.32.9",
+    "firbase": "9.6.9"
   },
   "scripts": {
     "predeploy": "npm run build",
